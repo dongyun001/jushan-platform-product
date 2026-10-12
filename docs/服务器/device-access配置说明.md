@@ -36,7 +36,7 @@ device-access 和 parking-boot 使用同一 API Key 做内部调用鉴权：
 
 | 组件 | 配置位置 | Key |
 |------|----------|-----|
-| parking-boot | Docker 环境变量 `jushan.device-access.api-key` 或 `.env.production` 的 `JUSHAN_DEVICE_ACCESS_API_KEY` | `Jem7uHVc1ahXBof82paWSrW9f5U0s/D7` |
+| parking-boot | Docker 环境变量 `jushan.device-access.api-key` 或 `.env.production` 的 `JUSHAN_DEVICE_ACCESS_API_KEY` | `<见 .env.production>` |
 | device-access | `.env.production` 的 `API_KEY_1` | 同上 |
 
 > **不一致会导致所有控闸命令（开闸/关闸/常开/常关）和状态查询失败。** device-access 日志中表现为 `API Key authentication failed`。
@@ -52,7 +52,7 @@ device-access 和 parking-boot 使用同一 API Key 做内部调用鉴权：
      → QianyiMessageHandler（加 base64: 前缀）
      → PlateRecognizedEventDispatcher.saveQianyiBase64Image()
      → ImageStorageService.saveBytes() 落盘
-     → 构造 http://120.26.3.4/images/{date}/{sn}/{ts}.jpg
+     → 构造 http://<SERVER_IP>/images/{date}/{sn}/{ts}.jpg
 ```
 
 无需在相机端额外配置 HTTP 上传。
@@ -79,16 +79,16 @@ DB_USERNAME=jushan
 DB_PASSWORD=xxxx
 
 # Device Access API Key（必须与 parking-boot 一致）
-API_KEY_1=Jem7uHVc1ahXBof82paWSrW9f5U0s/D7
+API_KEY_1=<见 .env.production>
 
 # Webhook 推送（经 nginx 80 端口）
 WEBHOOK_URL=http://127.0.0.1/api/v1/device-webhook/events
-WEBHOOK_SECRET_KEY=0z7fC5HzUKeLb35FANpo8ysvGNDI1961SwN07RTugw4=
+WEBHOOK_SECRET_KEY=<见 .env.production>
 
 # 白名单同步 API Key
-JUSHAN_WHITELIST_SYNC_API_KEY=w4f5umozc6DpdkAyhiAyIROpuT7HpHEe
+JUSHAN_WHITELIST_SYNC_API_KEY=<见 .env.production>
 
 # parking-boot 用
-JUSHAN_DEVICE_ACCESS_API_KEY=Jem7uHVc1ahXBof82paWSrW9f5U0s/D7
+JUSHAN_DEVICE_ACCESS_API_KEY=<见 .env.production>
 DEVICE_ACCESS_WEBHOOK_ALLOWED_IPS=127.0.0.1,172.
 ```

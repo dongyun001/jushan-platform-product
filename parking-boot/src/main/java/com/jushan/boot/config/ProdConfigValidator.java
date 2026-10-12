@@ -53,6 +53,8 @@ public class ProdConfigValidator implements ApplicationRunner {
 
         // ---- Redis ----
         checkRequired("spring.data.redis.host", "Redis 地址", missing);
+        // Redis 密码：prod 下不得为空，否则 Redis 无鉴权暴露
+        checkRequired("spring.data.redis.password", "Redis 密码", missing);
 
         // ---- Sa-Token ----
         checkRequired("sa-token.token-name", "Token 名称", missing);
@@ -75,6 +77,12 @@ public class ProdConfigValidator implements ApplicationRunner {
         checkRequiredRange("jushan.device-access.read-timeout", "Device Access 读取超时",
                 1000, 30000, missing);
 
+        // ---- Device Access 内部通信鉴权（不得使用开发默认值） ----
+        checkRequiredNotDevDefault("jushan.device-access.api-key", "Device Access API Key",
+                "test-api-key-001", missing);
+        checkRequiredNotDevDefault("jushan.device-access.whitelist-sync-api-key", "白名单同步 API Key",
+                "local-whitelist-sync-key-dev", missing);
+
         // ---- 以下校验在对应模块启用后取消注释 ----
         // T42: checkRequired("wx.pay.mch-id", "微信支付商户号", missing);
 
@@ -91,6 +99,20 @@ public class ProdConfigValidator implements ApplicationRunner {
         String value = env.getProperty(property);
         if (value == null || value.isBlank()) {
             missing.add(description + " (" + property + ")");
+        }
+    }
+
+    /**
+     * 校验某个配置项非空，且不等于已知的开发默认值。
+     * 用于防止开发期占位值被带到生产环境。
+     */
+    private void checkRequiredNotDevDefault(String property, String description,
+                                             String devDefault, List<String> missing) {
+        String value = env.getProperty(property);
+        if (value == null || value.isBlank()) {
+            missing.add(description + " (" + property + ")");
+        } else if (value.equals(devDefault)) {
+            missing.add(description + " 不能使用开发默认值 (" + property + ")");
         }
     }
 

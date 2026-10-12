@@ -23,8 +23,8 @@ spring:
   # MySQL — 当前版本仅用于设备基础信息持久化
   datasource:
     url: jdbc:mysql://localhost:3307/device_access?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-    username: root
-    password: root
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   flyway:
@@ -51,7 +51,7 @@ mybatis-plus:
 # MQTT / EMQX 配置 —— 第二步连接时使用
 device-access:
   mqtt:
-    broker-url: ${MQTT_BROKER_URL:tcp://121.41.131.215:1883}
+    broker-url: ${MQTT_BROKER_URL:tcp://localhost:1883}
     client-id: device-access-v0.1
     username: ${MQTT_USERNAME:}
     password: ${MQTT_PASSWORD:}
@@ -78,7 +78,7 @@ device-access:
   # 未配置时放行所有请求（开发/测试便利）
   auth:
     keys:
-      - ${API_KEY_1:test-api-key-001}
+      - ${API_KEY_1:}
       - ${API_KEY_2:}
 
   # 抓拍图片存储 — 芊熠相机独立上传（协议 §7.1.2，v0.6）

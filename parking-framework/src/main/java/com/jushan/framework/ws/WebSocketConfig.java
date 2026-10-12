@@ -1,5 +1,6 @@
 package com.jushan.framework.ws;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -50,10 +51,12 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     /** STOMP 端点路径 */
     static final String STOMP_ENDPOINT = "/ws";
 
-    /** 允许跨域来源（本地开发 + Nginx 反向代理 + 生产 IP） */
-    static final String[] ALLOWED_ORIGINS = {"http://localhost:5173", "http://localhost:5174",
-            "http://localhost:8080", "http://localhost:8088", "http://localhost:3000", "http://localhost:3001",
-            "http://120.26.3.4"};
+    /**
+     * 允许跨域来源（仅本地开发默认值）。
+     * 生产环境通过 {@code app.ws.allowed-origins} 覆盖（逗号分隔），避免把服务器地址写入源码。
+     */
+    @Value("${app.ws.allowed-origins:http://localhost:5173,http://localhost:5174,http://localhost:8080,http://localhost:8088,http://localhost:3000,http://localhost:3001}")
+    private String[] allowedOrigins;
 
     /** 应用目标前缀（客户端 → 服务端） */
     static final String APP_DESTINATION_PREFIX = "/app";

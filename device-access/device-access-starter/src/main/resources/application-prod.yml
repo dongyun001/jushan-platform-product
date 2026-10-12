@@ -49,10 +49,10 @@ device-access:
 
   auth:
     keys:
-      - ${API_KEY_1:test-api-key-001}
+      - ${API_KEY_1}
       - ${API_KEY_2:}
 
   image:
     storage-dir: /opt/jushan/data/device-images
-    public-base-url: http://120.26.3.4/images
+    public-base-url: ${IMAGE_PUBLIC_BASE_URL}
     retention-days: 30

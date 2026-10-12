@@ -55,7 +55,7 @@ public class ZhenshiMessageHandler implements MqttMessageListener {
     @Autowired(required = false)
     private PlateRecognizedListener plateListener;
 
-    /** 图片公网访问基础 URL（如 http://120.26.3.4/images），用于构造 FTP 上传图片的对外地址 */
+    /** 图片公网访问基础 URL（如 https://<域名>/images），用于构造 FTP 上传图片的对外地址 */
     @org.springframework.beans.factory.annotation.Value("${device-access.image.public-base-url:http://localhost:8082/images}")
     private String imagePublicBaseUrl;
 

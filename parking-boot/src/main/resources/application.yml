@@ -21,8 +21,8 @@ spring:
   # ---- 数据源（默认 local 环境使用本地 MySQL，生产/测试由对应 profile 覆盖） ----
   datasource:
     url: jdbc:mysql://localhost:3306/jushan_platform?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-    username: root
-    password: root
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: 10
@@ -95,7 +95,7 @@ jushan:
     base-url: http://localhost:8082
     connect-timeout: 3000
     read-timeout: 12000
-    api-key: test-api-key-001
+    api-key: ${JUSHAN_DEVICE_ACCESS_API_KEY:}
     # ---- 写命令幂等重试（仅 openGate/closeGate） ----
     retry:
       max-attempts: 3
@@ -130,9 +130,9 @@ device-access:
     timestamp-tolerance-seconds: 300
 
 # ---- JWT 配置 ----
-# 生产环境必须通过环境变量 JWT_SECRET 覆盖，至少 32 字符
+# 生产环境必须通过环境变量 JWT_SECRET 注入（至少 32 字符，无默认值，缺失即拒绝启动）
 jwt:
-  secret: ${JWT_SECRET:jushan-platform-secret-key-for-jwt-token-generation-must-be-at-least-32-chars}
+  secret: ${JWT_SECRET}
   expiration: 86400000 # access token 有效期 24 小时（毫秒）
   refresh-expiration: 604800000 # refresh token 有效期 7 天（毫秒）
 

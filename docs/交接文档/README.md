@@ -79,7 +79,7 @@
 
 | 服务 | 说明 | 需确认 |
 |---|---|---|
-| 阿里云 ECS | 服务器 120.26.3.4 | 控制台登录权限、续费状态 |
+| 阿里云 ECS | 服务器 <SERVER_IP> | 控制台登录权限、续费状态 |
 | Gitee 仓库 | `zeng-bohan-66/jushan-platform-product` | 仓库所有权转让或添加协作者 |
 | P云支付 | 当前支付对接方 | 商户号、API Key、后台地址（文档：[非PP前端](https://doc.4pyun.com/openapi/guideline/payment-policy.html) / [PP前端](https://doc.4pyun.com/parking/)） |
 | 微信小程序/公众号 | 二期需要用 | AppID、Secret、后台权限（如有注册） |

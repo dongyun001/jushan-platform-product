@@ -86,4 +86,10 @@ jushan:
   device-access:
     mock:
       enabled: false
+    # 仅本地开发使用的 DA 通信 Key（生产由 JUSHAN_DEVICE_ACCESS_API_KEY 环境变量注入）
+    api-key: local-dev-api-key
     whitelist-sync-api-key: "local-whitelist-sync-key-dev"
+
+# ---- JWT（仅本地开发；生产由 JWT_SECRET 环境变量注入，基类无默认值） ----
+jwt:
+  secret: local-development-only-jwt-secret-key-at-least-32-chars
